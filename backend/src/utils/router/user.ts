@@ -3,6 +3,7 @@ import { loginSchema, registerSchema } from "../schema"
 import { db } from "../db"
 import jwt from "jsonwebtoken"
 import bcryptjs from "bcryptjs"
+import { middlware } from "./middleware"
 export const router = express()
 
 const JWT_SECRET = process.env.JWT_SECRET as string
@@ -45,7 +46,7 @@ router.post("/register", async (req: Request, res: Response) => {
             }
         })
 
-        const token = jwt.sign(user.id, JWT_SECRET)
+        const token = jwt.sign(user.id, JWT_SECRET, { expiresIn: "1h" })
 
         return res.status(200).json({
             user: user,
@@ -83,13 +84,13 @@ router.post("/login", async (req: Request, res: Response) => {
             })
         }
 
-        const passMatch = bcryptjs.compare(password, user?.password)
+        const passMatch = await bcryptjs.compare(password, user?.password)
         if (!passMatch) {
             return res.status(401).json({
                 message: "Wrong Credentials"
             })
         }
-        const token = jwt.sign(user.id, JWT_SECRET)
+        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: 60 })
 
         return res.status(200).json({
             user: user,
@@ -101,3 +102,4 @@ router.post("/login", async (req: Request, res: Response) => {
         })
     }
 })
+
