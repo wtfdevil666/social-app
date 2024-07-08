@@ -46,7 +46,7 @@ router.post("/register", async (req: Request, res: Response) => {
             }
         })
 
-        const token = jwt.sign(user.id, JWT_SECRET, { expiresIn: "1h" })
+        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "1h" })
 
         return res.status(200).json({
             user: user,
