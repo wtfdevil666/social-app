@@ -1,9 +1,11 @@
 import express, { Request, Response } from "express"
-import { registerSchema } from "../schema"
+import { loginSchema, registerSchema } from "../schema"
 import { db } from "../db"
 import jwt from "jsonwebtoken"
 import bcryptjs from "bcryptjs"
 export const router = express()
+
+const JWT_SECRET = process.env.JWT_SECRET as string
 
 router.post("/register", async (req: Request, res: Response) => {
     try {
@@ -43,7 +45,6 @@ router.post("/register", async (req: Request, res: Response) => {
             }
         })
 
-        const JWT_SECRET = process.env.JWT_SECRET as string
         const token = jwt.sign(user.id, JWT_SECRET)
 
         return res.status(200).json({
@@ -51,7 +52,51 @@ router.post("/register", async (req: Request, res: Response) => {
             token: token
         })
     } catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
+            error: error
+        })
+    }
+})
+
+router.post("/login", async (req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body
+
+        const validate = loginSchema.safeParse({
+            email: email,
+            password: password,
+        })
+        if (!validate.success) {
+            return res.status(400).json({
+                message: "Wrong Inputs"
+            })
+        }
+
+        const user = await db.user.findUnique({
+            where: {
+                email: email
+            }
+        })
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            })
+        }
+
+        const passMatch = bcryptjs.compare(password, user?.password)
+        if (!passMatch) {
+            return res.status(401).json({
+                message: "Wrong Credentials"
+            })
+        }
+        const token = jwt.sign(user.id, JWT_SECRET)
+
+        return res.status(200).json({
+            user: user,
+            token: token
+        })
+    } catch (error) {
+        return res.status(400).json({
             error: error
         })
     }
