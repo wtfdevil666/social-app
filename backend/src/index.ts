@@ -16,6 +16,6 @@ app.use("/tweet", tweetRouter)
 
 
 app.listen(PORT, () => {
-    console.log(`Server runnin on ${PORT}`);
+    console.log(`Server running on ${PORT}`);
 
 })
