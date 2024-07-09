@@ -12,10 +12,10 @@ import { TwitterLogoIcon } from "@radix-ui/react-icons";
 export const Login = () => {
     return (
         <div className="flex flex-col h-screen items-center justify-center">
-            <Card className="w-[400px] bg-black text-white border-zinc-700">
+            <Card className="w-[300px] sm:w-[400px] bg-black text-white border-zinc-700">
                 <CardHeader className="items-center">
                     <CardTitle>
-                        <TwitterLogoIcon className="w-[40px] h-[40px]"/>
+                        <TwitterLogoIcon className="w-[40px] h-[40px]" />
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
