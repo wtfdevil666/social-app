@@ -1,3 +1,4 @@
+import { BsTwitterX } from "react-icons/bs";
 import { LoginForm } from "../components/auth/login-form";
 import {
     Card,
@@ -9,9 +10,11 @@ import {
 const Login = () => {
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <Card className="space-y-4 w-[380px]">
+            <Card className="space-y-4 w-[380px] rounded-2xl bg-black text-white border-zinc-800">
                 <CardHeader className="items-center">
-                    <CardTitle>Login</CardTitle>
+                    <CardTitle>
+                        <BsTwitterX className="w-[30px] h-[30px]" />
+                    </CardTitle>
                 </CardHeader>
                 <CardContent>
                     <LoginForm />

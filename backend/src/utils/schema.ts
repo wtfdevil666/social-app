@@ -23,3 +23,10 @@ export const loginSchema = z.object({
         message: "Min 6 character(s) required"
     }),
 })
+
+export const tweetSchema = z.object({
+    content: z.string().min(1, {
+        message: "Tweet is required"
+    }),
+
+})

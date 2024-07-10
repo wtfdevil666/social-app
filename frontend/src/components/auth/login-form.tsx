@@ -2,11 +2,13 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { loginSchema } from "../../lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import axios from "axios";
 
 export const LoginForm = () => {
+    const URL = import.meta.env.VITE_BACKENDURL;
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -14,8 +16,15 @@ export const LoginForm = () => {
             password: "",
         },
     });
-    const onSubmit = (values: z.infer<typeof loginSchema>) => {
-        console.log(values);
+    const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+        await axios
+            .post(`${URL}/user/login`, {
+                email: values.email,
+                password: values.password,
+            })
+            .then((response) => {
+                sessionStorage.setItem("token", response.data.token);
+            });
     };
     return (
         <div>
@@ -28,25 +37,41 @@ export const LoginForm = () => {
                         name="email"
                         control={form.control}
                         render={({ field }) => (
-                            <Input
-                                {...field}
-                                type="text"
-                                placeholder="johndoe@example.com"
-                            />
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="text"
+                                        className="bg-zinc-800 border-zinc-800 rounded-xl text-white"
+                                        placeholder="johndoe@example.com"
+                                    />
+                                </FormControl>
+                            </FormItem>
                         )}
                     />
                     <FormField
                         name="password"
                         control={form.control}
                         render={({ field }) => (
-                            <Input
-                                {...field}
-                                type="password"
-                                placeholder="*****"
-                            />
+                            <FormItem>
+                                <FormLabel>Password</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        className="bg-zinc-800 border-zinc-800 rounded-xl text-white"
+                                        {...field}
+                                        type="password"
+                                        placeholder="*****"
+                                    />
+                                </FormControl>
+                            </FormItem>
                         )}
                     />
-                    <Button>Login</Button>
+                    <div className="pt-4">
+                        <Button className="bg-sky-500 hover:bg-sky-800 w-full rounded-full">
+                            Login
+                        </Button>
+                    </div>
                 </form>
             </Form>
         </div>

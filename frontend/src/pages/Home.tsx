@@ -1,5 +1,8 @@
+import { verifyToken } from "../lib/verifyToken";
+
 const Home = () => {
-    return <div>Home</div>;
+    verifyToken();
+    return <div className="text-white">Home</div>;
 };
 
 export default Home;
