@@ -5,14 +5,20 @@ import Home from "./pages/Home";
 
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/" element={<Home />} />
-            </Routes>
-        </BrowserRouter>
+        <Layout>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/" element={<Home />} />
+                </Routes>
+            </BrowserRouter>
+        </Layout>
     );
+}
+
+function Layout({ children }: { children: React.ReactNode }) {
+    return <div className="h-screen bg-black">{children}</div>;
 }
 
 export default App;
