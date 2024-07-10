@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export const verifyToken = () => {
     const navigate = useNavigate()
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
+        const token = localStorage.getItem("token");
         if (token === null) {
             navigate("/login");
             return;
@@ -16,5 +16,15 @@ export const verifyToken = () => {
             navigate("/login");
             return;
         }
+        const time = new Date().getTime() / 1000
+        if (!decoded.exp) {
+            navigate("/login");
+            return
+        }
+        if (time > decoded.exp) {
+            navigate("/login")
+            return
+        }
+        navigate("/")
     }, [])
 }

@@ -6,6 +6,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import z from "zod";
 import axios from "axios";
+import { verifyToken } from "../../lib/verifyToken";
 
 export const RegisterForm = () => {
     const URL = import.meta.env.VITE_BACKENDURL;
@@ -27,9 +28,11 @@ export const RegisterForm = () => {
                 password: values.password,
             })
             .then((response) => {
-                sessionStorage.setItem("token", response.data.token);
+                localStorage.setItem("token", response.data.token);
             });
     };
+
+    verifyToken();
     return (
         <div>
             <Form {...form}>

@@ -6,9 +6,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { verifyToken } from "../../lib/verifyToken";
 
 export const LoginForm = () => {
     const URL = import.meta.env.VITE_BACKENDURL;
+    const navigate = useNavigate();
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -23,9 +26,13 @@ export const LoginForm = () => {
                 password: values.password,
             })
             .then((response) => {
-                sessionStorage.setItem("token", response.data.token);
+                localStorage.setItem("token", response.data.token);
+                navigate("/");
             });
     };
+
+    verifyToken();
+
     return (
         <div>
             <Form {...form}>
