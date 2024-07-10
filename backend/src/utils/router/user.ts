@@ -90,7 +90,7 @@ router.post("/login", async (req: Request, res: Response) => {
                 message: "Wrong Credentials"
             })
         }
-        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: 60 })
+        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' })
 
         return res.status(200).json({
             user: user,
