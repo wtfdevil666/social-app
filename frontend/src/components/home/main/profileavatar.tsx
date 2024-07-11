@@ -3,7 +3,7 @@ import { Button } from "../../ui/button";
 
 export const Profile = () => {
     return (
-        <Button className="h-auto rounded-full bg-black hover:bg-zinc-900 sm:pl-12">
+        <Button className="h-auto rounded-full bg-black hover:bg-zinc-900 sm:ml-8">
             <div className="md:flex md:flex-row md:space-x-4 md:items-center">
                 <div>
                     <Avatar>
