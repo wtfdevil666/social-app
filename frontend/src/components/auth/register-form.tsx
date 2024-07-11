@@ -6,10 +6,11 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import z from "zod";
 import axios from "axios";
-import { verifyToken } from "../../lib/verifyToken";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterForm = () => {
     const URL = import.meta.env.VITE_BACKENDURL;
+    const navigate = useNavigate();
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -21,7 +22,7 @@ export const RegisterForm = () => {
     });
     const onSubmit = async (values: z.infer<typeof registerSchema>) => {
         await axios
-            .post(`${URL}/user/login`, {
+            .post(`${URL}/user/register`, {
                 name: values.name,
                 username: values.username,
                 email: values.email,
@@ -29,10 +30,9 @@ export const RegisterForm = () => {
             })
             .then((response) => {
                 localStorage.setItem("token", response.data.token);
+                navigate("/");
             });
     };
-
-    verifyToken();
     return (
         <div>
             <Form {...form}>

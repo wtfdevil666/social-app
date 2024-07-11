@@ -25,7 +25,6 @@ export const middlware = async (req: Request, res: Response, next: NextFunction)
             message: "Unauthorized"
         })
     }
-    console.log("middleware:", verify.id);
     req.userId = verify.id
     next()
 } 

@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
 import { RegisterForm } from "../components/auth/register-form";
 import {
     Card,
     CardContent,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "../components/ui/card";
@@ -20,6 +22,14 @@ const Register = () => {
                     <CardContent>
                         <RegisterForm />
                     </CardContent>
+                    <CardFooter className="flex-col items-center">
+                        <Link
+                            to={"/login"}
+                            className="text-base underline underline-offset-2"
+                        >
+                            Already Have An Account?
+                        </Link>
+                    </CardFooter>
                 </Card>
             </div>
         </div>

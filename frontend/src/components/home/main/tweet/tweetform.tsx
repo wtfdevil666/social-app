@@ -33,6 +33,7 @@ export const TweetForm = () => {
             }
         );
         console.log(values);
+        window.location.reload();
     };
     const percentage = (charCount / 120) * 100;
     return (

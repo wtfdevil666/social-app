@@ -3,9 +3,11 @@ import { LoginForm } from "../components/auth/login-form";
 import {
     Card,
     CardContent,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "../components/ui/card";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     return (
@@ -19,6 +21,14 @@ const Login = () => {
                 <CardContent>
                     <LoginForm />
                 </CardContent>
+                <CardFooter className="flex-col items-center">
+                    <Link
+                        to={"/register"}
+                        className="text-base underline underline-offset-2"
+                    >
+                        Dont Have an Account?
+                    </Link>
+                </CardFooter>
             </Card>
         </div>
     );

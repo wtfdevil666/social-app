@@ -5,7 +5,7 @@ import { verifyToken } from "../lib/verifyToken";
 const Home = () => {
     verifyToken();
     return (
-        <div className="text-white grid md:grid-cols-4 h-screen">
+        <div className="text-white grid md:grid-cols-4 h-full">
             <Main />
             <RightSidebar />
         </div>

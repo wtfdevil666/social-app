@@ -1,3 +1,15 @@
+import { useNavigate } from "react-router-dom";
+import { Button } from "../../ui/button";
+
 export const RightSidebar = () => {
-    return <div className="hidden md:block">Right sidebar</div>;
+    const navigate = useNavigate();
+    const onClick = () => {
+        localStorage.removeItem("token");
+        navigate("/register");
+    };
+    return (
+        <div className="hidden md:block">
+            <Button onClick={onClick}>Logout</Button>
+        </div>
+    );
 };
