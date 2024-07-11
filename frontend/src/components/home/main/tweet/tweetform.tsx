@@ -36,7 +36,7 @@ export const TweetForm = () => {
     };
     const percentage = (charCount / 120) * 100;
     return (
-        <div className="flex flex-row space-x-2">
+        <div className="flex flex-row space-x-2 border-b border-zinc-800">
             <div className="p-3">
                 <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" />
@@ -75,7 +75,7 @@ export const TweetForm = () => {
                                     />
                                 </div>
                                 <Button className="bg-sky-500 rounded-full">
-                                    Posts
+                                    Post
                                 </Button>
                             </div>
                         </div>

@@ -33,3 +33,20 @@ router.post("/create", middlware, async (req, res) => {
         })
     }
 })
+
+router.get("/get", middlware, async (req, res) => {
+    try {
+        const tweets = await db.tweet.findMany({
+            include: {
+                user: true
+            }
+        })
+        return res.json({
+            tweets: tweets
+        })
+    } catch (error) {
+        return res.status(401).json({
+            error: error
+        })
+    }
+})
