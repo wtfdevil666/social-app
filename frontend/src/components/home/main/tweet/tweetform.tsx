@@ -7,8 +7,12 @@ import { Textarea } from "../../../ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "../../../ui/avatar";
 import { Button } from "../../../ui/button";
 import { useState } from "react";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import axios from "axios";
 
 export const TweetForm = () => {
+    const URL = import.meta.env.VITE_BACKENDURL;
     const [charCount, setCharCount] = useState(0);
     const form = useForm<z.infer<typeof tweetSchema>>({
         resolver: zodResolver(tweetSchema),
@@ -16,9 +20,11 @@ export const TweetForm = () => {
             content: "",
         },
     });
-    const onSubmit = (values: z.infer<typeof tweetSchema>) => {
+    const onSubmit = async (values: z.infer<typeof tweetSchema>) => {
+        await axios.post(`${URL}/tweet/`);
         console.log(values);
     };
+    const percentage = (charCount / 120) * 100;
     return (
         <div className="flex flex-row space-x-2">
             <div className="p-3">
@@ -49,22 +55,21 @@ export const TweetForm = () => {
                                 </FormControl>
                             )}
                         />
-                    </form>
-
-                    <div className="mt-4 items-end flex flex-col mr-4">
-                        <div className="flex flex-row space-x-4 items-center">
-                            <div
-                                className={`text-right text-gray-400 ${
-                                    charCount > 120 && "text-red-500"
-                                }`}
-                            >
-                                {charCount}/120
+                        <div className="mt-4 items-end flex flex-col mr-4">
+                            <div className="flex flex-row space-x-4 items-center">
+                                <div>
+                                    <CircularProgressbar
+                                        value={percentage}
+                                        maxValue={120}
+                                        className="w-[32px] h-[32px]"
+                                    />
+                                </div>
+                                <Button className="bg-sky-500 rounded-full">
+                                    Posts
+                                </Button>
                             </div>
-                            <Button className="bg-sky-500 rounded-full">
-                                Posts
-                            </Button>
                         </div>
-                    </div>
+                    </form>
                 </Form>
             </div>
         </div>
