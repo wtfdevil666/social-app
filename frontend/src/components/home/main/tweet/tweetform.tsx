@@ -21,7 +21,17 @@ export const TweetForm = () => {
         },
     });
     const onSubmit = async (values: z.infer<typeof tweetSchema>) => {
-        await axios.post(`${URL}/tweet/`);
+        await axios.post(
+            `${URL}/tweet/create`,
+            {
+                content: values.content,
+            },
+            {
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                },
+            }
+        );
         console.log(values);
     };
     const percentage = (charCount / 120) * 100;

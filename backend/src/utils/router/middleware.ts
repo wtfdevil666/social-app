@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken"
+import jwt, { JwtPayload } from "jsonwebtoken"
 
 const JWT_SECRET = process.env.JWT_SECRET as string
 
@@ -11,6 +11,7 @@ declare global {
     }
 }
 
+
 export const middlware = async (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers["authorization"]
     if (!authHeader) {
@@ -18,13 +19,13 @@ export const middlware = async (req: Request, res: Response, next: NextFunction)
             message: "Token not found"
         })
     }
-    const verify = jwt.verify(authHeader, JWT_SECRET)
+    const verify = jwt.verify(authHeader, JWT_SECRET) as JwtPayload
     if (!verify) {
         return res.status(401).json({
             message: "Unauthorized"
         })
     }
-    console.log("middleware:", verify);
-    req.userId = verify
+    console.log("middleware:", verify.id);
+    req.userId = verify.id
     next()
 } 

@@ -23,7 +23,7 @@ model User {
   followers String[]
   Tweet     Tweet[]
   Replies   Reply[]
-  Likes      Like[]
+  Likes     Like[]
 }
 
 model Tweet {
@@ -32,7 +32,7 @@ model Tweet {
   userId  String
   user    User    @relation(fields: [userId], references: [id])
   Replies Reply[]
-  Likes    Like[]
+  Likes   Like[]
 }
 
 model Reply {
